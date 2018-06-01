@@ -14,22 +14,13 @@ public class ControllerTutoria implements IViewTutoriaModelListener {
 	@Override
 	public void update(IViewTutoriaModel view) {
 		
-		this.getTutoria().setTutorNombre( view.getTutorNombre() );
-		this.getTutoria().setTutorEdad( view.getTutorEdad() );
+		this.getTutoria().setTutorNombre( view.getTutor().getNombre() );
+		this.getTutoria().setTutorEdad( view.getTutor().getEdad() );
 		
-		this.getTutoria().setPersonaACargoNombre( view.getPersonaACargoNombre() );
-		this.getTutoria().setPersonaACargoEdad( view.getPersonaACargoEdad() );
+		this.getTutoria().setPersonaACargoNombre( view.getPersona().getNombre() );
+		this.getTutoria().setPersonaACargoEdad( view.getPersona().getEdad() );
 		
 		System.out.println( this.getTutoria() );
-	}
-
-	@Override
-	public void load(IViewTutoriaModel view) {
-		view.setTutorEdad( this.getTutoria().getTutor().getEdad( ) );		
-		view.setTutorNombre( this.getTutoria().getTutor().getNombre( ) );
-		
-		view.setPersonaACargoEdad( this.getTutoria().getPersonaACargo().getEdad( ) );		
-		view.setPersonaACargoNombre( this.getTutoria().getPersonaACargo().getNombre( ) );		
 	}
 
 	public Tutoria getTutoria() {

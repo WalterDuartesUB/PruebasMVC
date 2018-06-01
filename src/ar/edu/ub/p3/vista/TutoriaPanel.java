@@ -2,9 +2,10 @@ package ar.edu.ub.p3.vista;
 
 import java.awt.GridLayout;
 
-import javax.swing.JPanel;
+import ar.edu.ub.p3.modelo.Persona;
+import ar.edu.ub.p3.modelo.Tutoria;
 
-public class TutoriaPanel extends JPanel implements IViewTutoriaModel{
+public class TutoriaPanel extends IViewTutoriaModel{
 
 	/**
 	 * 
@@ -12,9 +13,13 @@ public class TutoriaPanel extends JPanel implements IViewTutoriaModel{
 	private static final long serialVersionUID = 1L;
 	private PersonaPanel fichaPersona;
 	private PersonaPanel fichaTutor;
+	private Tutoria tutoria;
 	
-	public TutoriaPanel() {
-		this.inicializarPanel();		
+	public TutoriaPanel() {		
+		this.inicializarPanel();
+		
+		this.setTutor( this.getFichaTutor() );
+		this.setPersona( this.getFichaPersona() );		
 	}
 
 	private void inicializarPanel() {
@@ -27,60 +32,41 @@ public class TutoriaPanel extends JPanel implements IViewTutoriaModel{
 		this.add( this.getFichaPersona() );
 	}
 
-	public PersonaPanel getFichaTutor() {
+	private PersonaPanel getFichaTutor() {
 		return fichaTutor;
 	}
 
-	public void setFichaTutor(PersonaPanel fichaTutor) {
+	private void setFichaTutor(PersonaPanel fichaTutor) {
 		this.fichaTutor = fichaTutor;
 	}
 
-	public PersonaPanel getFichaPersona() {
+	private PersonaPanel getFichaPersona() {
 		return fichaPersona;
 	}
 
-	public void setFichaPersona(PersonaPanel fichaPersona) {
+	private void setFichaPersona(PersonaPanel fichaPersona) {
 		this.fichaPersona = fichaPersona;
 	}
-	
-	@Override
-	public String getTutorNombre() {
-		return this.getFichaTutor().getNombre();
+
+	public void setInput(Tutoria tutoria) {
+		this.setTutoria(tutoria);		
 	}
 
-	@Override
-	public void setTutorNombre(String nombre) {
-		this.getFichaTutor().setNombre( nombre );		
+	private Tutoria getTutoria() {
+		return tutoria;
 	}
 
-	@Override
-	public int getTutorEdad() {
-		return this.getFichaTutor().getEdad();
+	private void setTutoria(Tutoria tutoria) {
+		this.tutoria = tutoria;
 	}
 
-	@Override
-	public void setTutorEdad(int edad) {
-		this.getFichaTutor().setEdad( edad );		
+	public void loadInput() {
+		this.loadInput( this.getFichaPersona(), this.getTutoria().getPersonaACargo() );
+		this.loadInput( this.getFichaTutor(), this.getTutoria().getTutor() );
 	}
 	
-	@Override
-	public String getPersonaACargoNombre() {
-		return this.getFichaPersona().getNombre();
-	}
-
-	@Override
-	public void setPersonaACargoNombre(String nombre) {
-		this.getFichaPersona().setNombre( nombre );		
-	}
-
-	@Override
-	public int getPersonaACargoEdad() {
-		return this.getFichaPersona().getEdad();
-	}
-
-	@Override
-	public void setPersonaACargoEdad(int edad) {
-		this.getFichaPersona().setEdad( edad );		
-	}
-
+	private void loadInput( PersonaPanel ficha, Persona persona) {
+		ficha.setEdad( persona.getEdad() );
+		ficha.setNombre( persona.getNombre() );
+	}	
 }

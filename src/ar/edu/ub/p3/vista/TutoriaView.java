@@ -10,7 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class TutoriaView extends JFrame implements IViewTutoriaModel {
+import ar.edu.ub.p3.modelo.Tutoria;
+
+public class TutoriaView extends JFrame /*implements IViewTutoriaModel*/ {
 	/**
 	 * 
 	 */
@@ -20,26 +22,19 @@ public class TutoriaView extends JFrame implements IViewTutoriaModel {
 	
 	private JButton btnGrabarTutoria;
 	private JButton btnCargarTutoria;
-	
+
 	public TutoriaView(List<IViewTutoriaModelListener> viewListeners){
-		this.setViewListeners(viewListeners);
+		this.setViewListeners(viewListeners);		
 		
 		this.inicializarVentana();
 		
 		this.agregarPaneles();
-		
-		this.loadModel();
-		
+
 		this.setVisible(true);
 	}
 	
 	public TutoriaView(){
 		this( new LinkedList<IViewTutoriaModelListener>());
-	}
-	
-	private void loadModel() {
-		for( IViewTutoriaModelListener listener : this.getViewListeners() )
-			listener.load( this );		
 	}
 
 	private void inicializarVentana() {
@@ -97,54 +92,14 @@ public class TutoriaView extends JFrame implements IViewTutoriaModel {
 	}
 	
 	public void onBtnCargarTutoria(ActionEvent e) {
-		this.loadModel();
+		this.loadInput();
 	}
 
 	private void updateModel() {
 		for( IViewTutoriaModelListener listener : this.getViewListeners() )
-			listener.update( this );
-	}
-
-	@Override
-	public String getTutorNombre() {
-		return this.getPanelTutoria().getTutorNombre();
-	}
-
-	@Override
-	public void setTutorNombre(String nombre) {
-		this.getPanelTutoria().setTutorNombre( nombre );		
-	}
-
-	@Override
-	public int getTutorEdad() {
-		return this.getPanelTutoria().getTutorEdad();
-	}
-
-	@Override
-	public void setTutorEdad(int edad) {
-		this.getPanelTutoria().setTutorEdad( edad );		
+			listener.update( this.getPanelTutoria() );
 	}
 	
-	@Override
-	public String getPersonaACargoNombre() {
-		return this.getPanelTutoria().getPersonaACargoNombre();
-	}
-
-	@Override
-	public void setPersonaACargoNombre(String nombre) {
-		this.getPanelTutoria().setPersonaACargoNombre( nombre );		
-	}
-
-	@Override
-	public int getPersonaACargoEdad() {
-		return this.getPanelTutoria().getPersonaACargoEdad();
-	}
-
-	@Override
-	public void setPersonaACargoEdad(int edad) {
-		this.getPanelTutoria().setPersonaACargoEdad( edad );		
-	}
-
 	private TutoriaPanel getPanelTutoria() {
 		return panelTutoria;
 	}
@@ -159,5 +114,16 @@ public class TutoriaView extends JFrame implements IViewTutoriaModel {
 
 	private void setBtnCargarTutoria(JButton btnCargarTutoria) {
 		this.btnCargarTutoria = btnCargarTutoria;
-	}	
+	}
+
+	public void setInput(Tutoria tutoria) {
+		this.getPanelTutoria().setInput( tutoria );
+		this.loadInput();			
+	}
+
+	private void loadInput() {
+		this.getPanelTutoria().loadInput();					
+	}
+
+
 }
